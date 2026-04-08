@@ -11,6 +11,8 @@ class AppNavigator(
 
     fun openHome() = openSingleTop(LearningRoute.Home.route)
 
+    fun openSnackbarIntro() = openSingleTop(LearningRoute.Snackbar.route)
+
     fun openSafeDrawing() = openSingleTop(LearningRoute.SafeDrawing.route)
 
     fun openNavigationIntro() = openSingleTop(LearningRoute.Navigation.route)

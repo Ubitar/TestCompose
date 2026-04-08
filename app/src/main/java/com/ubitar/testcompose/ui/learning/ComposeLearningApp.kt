@@ -15,6 +15,7 @@ import com.ubitar.testcompose.ui.learning.screens.NavigationIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.PageScopedViewModelScreen
 import com.ubitar.testcompose.ui.learning.screens.PagerIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.SafeDrawingPaddingScreen
+import com.ubitar.testcompose.ui.learning.screens.SnackbarIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.SharedNavGraphViewModelScreen
 import com.ubitar.testcompose.ui.learning.screens.StateIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.ViewModelIntroScreen
@@ -33,6 +34,7 @@ fun ComposeLearningApp(
     ) {
         composable(LearningRoute.Home.route) {
             HomeScreen(
+                onOpenSnackbar = navigator::openSnackbarIntro,
                 onOpenSafeDrawing = navigator::openSafeDrawing,
                 onOpenNavigation = navigator::openNavigationIntro,
                 onOpenModifier = navigator::openModifierIntro,
@@ -41,6 +43,9 @@ fun ComposeLearningApp(
                 onOpenViewModel = navigator::openViewModelIntro,
                 onOpenVideo = navigator::openVideoIntro
             )
+        }
+        composable(LearningRoute.Snackbar.route) {
+            SnackbarIntroScreen(onBack = navigator::back)
         }
         composable(LearningRoute.SafeDrawing.route) {
             SafeDrawingPaddingScreen(onBack = navigator::back)

@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
+    onOpenSnackbar: () -> Unit,
     onOpenSafeDrawing: () -> Unit,
     onOpenNavigation: () -> Unit,
     onOpenModifier: () -> Unit,
@@ -23,6 +24,12 @@ fun HomeScreen(
     ) {
         block {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                EntryCard(
+                    title = "Snackbar 提示示例",
+                    description = "直接体验 Compose 里更常见的页面内提示方式，看看它怎么和 Scaffold 配合。",
+                    color = Color(0xFFB56576),
+                    onClick = onOpenSnackbar
+                )
                 EntryCard(
                     title = "safeDrawingPadding() 示例",
                     description = "看 edge-to-edge 下为什么需要安全区，以及它和普通 padding 的区别。",

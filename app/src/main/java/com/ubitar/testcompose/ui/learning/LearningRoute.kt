@@ -2,6 +2,7 @@ package com.ubitar.testcompose.ui.learning
 
 sealed class LearningRoute(val route: String) {
     data object Home : LearningRoute("home")
+    data object Snackbar : LearningRoute("snackbar_intro")
     data object SafeDrawing : LearningRoute("safe_drawing")
     data object Navigation : LearningRoute("navigation_intro")
     data object NavigationDemoA : LearningRoute("navigation_demo_a")
