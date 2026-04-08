@@ -12,6 +12,7 @@ fun HomeScreen(
     onOpenSafeDrawing: () -> Unit,
     onOpenNavigation: () -> Unit,
     onOpenModifier: () -> Unit,
+    onOpenPager: () -> Unit,
     onOpenState: () -> Unit,
     onOpenViewModel: () -> Unit,
     onOpenVideo: () -> Unit
@@ -39,6 +40,12 @@ fun HomeScreen(
                     description = "理解布局、背景、点击、padding 为什么都长得像链式调用。",
                     color = Color(0xFF26547C),
                     onClick = onOpenModifier
+                )
+                EntryCard(
+                    title = "Compose 版 ViewPager",
+                    description = "学习 HorizontalPager、圆点指示器，以及 TabRow 和翻页联动的常见写法。",
+                    color = Color(0xFF7A4E2D),
+                    onClick = onOpenPager
                 )
                 EntryCard(
                     title = "状态与重组",
