@@ -1,14 +1,12 @@
-package com.ubitar.testcompose.ui.learning.screens
+﻿package com.ubitar.testcompose.ui.learning.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
@@ -20,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -145,10 +142,19 @@ fun CodeLikeLine(text: String) {
 }
 
 @Composable
-fun TwoTagRow(first: String, second: String) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        TinyTag(first)
-        TinyTag(second, color = Color(0xFFD94F3D))
+fun ActionButton(
+    text: String,
+    onClick: () -> Unit,
+    color: Color = Color(0xFF26547C)
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color, RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 12.dp)
+    ) {
+        Text(text = text, color = Color.White, style = MaterialTheme.typography.titleSmall)
     }
 }
 
