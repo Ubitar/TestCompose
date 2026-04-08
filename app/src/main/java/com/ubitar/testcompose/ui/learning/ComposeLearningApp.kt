@@ -1,6 +1,7 @@
-﻿package com.ubitar.testcompose.ui.learning
+package com.ubitar.testcompose.ui.learning
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -14,6 +15,7 @@ import com.ubitar.testcompose.ui.learning.screens.StateIntroScreen
 @Composable
 fun ComposeLearningApp() {
     val navController = rememberNavController()
+    val navigator = remember(navController) { AppNavigator(navController) }
 
     NavHost(
         navController = navController,
@@ -21,19 +23,19 @@ fun ComposeLearningApp() {
     ) {
         composable(LearningRoute.Home.route) {
             HomeScreen(
-                onOpenSafeDrawing = { navController.navigate(LearningRoute.SafeDrawing.route) },
-                onOpenNavigation = { navController.navigate(LearningRoute.Navigation.route) },
-                onOpenModifier = { navController.navigate(LearningRoute.Modifier.route) },
-                onOpenState = { navController.navigate(LearningRoute.State.route) }
+                onOpenSafeDrawing = navigator::openSafeDrawing,
+                onOpenNavigation = navigator::openNavigationIntro,
+                onOpenModifier = navigator::openModifierIntro,
+                onOpenState = navigator::openStateIntro
             )
         }
         composable(LearningRoute.SafeDrawing.route) {
-            SafeDrawingPaddingScreen(onBack = { navController.popBackStack() })
+            SafeDrawingPaddingScreen(onBack = navigator::back)
         }
         composable(LearningRoute.Navigation.route) {
             NavigationIntroScreen(
-                onBack = { navController.popBackStack() },
-                onOpenDemo = { navController.navigate(LearningRoute.NavigationDemoA.route) }
+                onBack = navigator::back,
+                onOpenDemo = { navigator.openNavigationDemo(LearningRoute.NavigationDemoA.route) }
             )
         }
         composable(LearningRoute.NavigationDemoA.route) {
@@ -46,10 +48,10 @@ fun ComposeLearningApp() {
             NavigationDemoScreen("页面 C", LearningRoute.NavigationDemoC.route, navController)
         }
         composable(LearningRoute.Modifier.route) {
-            ModifierIntroScreen(onBack = { navController.popBackStack() })
+            ModifierIntroScreen(onBack = navigator::back)
         }
         composable(LearningRoute.State.route) {
-            StateIntroScreen(onBack = { navController.popBackStack() })
+            StateIntroScreen(onBack = navigator::back)
         }
     }
 }

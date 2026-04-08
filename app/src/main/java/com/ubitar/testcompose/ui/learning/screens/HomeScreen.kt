@@ -1,9 +1,10 @@
-package com.ubitar.testcompose.ui.learning.screens
+﻿package com.ubitar.testcompose.ui.learning.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -15,7 +16,7 @@ fun HomeScreen(
 ) {
     LearningScreen(
         title = "Compose 学习入口",
-        summary = "这个首页专门用来放可点击的学习入口。MainActivity 现在只负责启动 Compose 应用，真正的界面跳转交给 NavHost 管理。"
+        summary = "这个首页专门用来放可点击的学习入口。MainActivity 现在只负责启动 Compose 应用，真正的界面跳转交给 NavHost 和 AppNavigator 管理。"
     ) {
         block {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -47,3 +48,4 @@ fun HomeScreen(
         }
     }
 }
+
