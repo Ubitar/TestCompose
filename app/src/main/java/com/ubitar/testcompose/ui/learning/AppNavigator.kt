@@ -19,6 +19,14 @@ class AppNavigator(
 
     fun openStateIntro() = openSingleTop(LearningRoute.State.route)
 
+    fun openViewModelIntro() = openSingleTop(LearningRoute.ViewModel.route)
+
+    fun openPageScopedViewModel() = openSingleTop(LearningRoute.ViewModelPageScoped.route)
+
+    fun openSharedGraphViewModel() = openSingleTop(LearningRoute.ViewModelSharedGraph.route)
+
+    fun openActivityScopedViewModel() = openSingleTop(LearningRoute.ViewModelActivityScoped.route)
+
     fun openVideoIntro() = openSingleTop(LearningRoute.Video.route)
 
     fun openNavigationDemo(route: String) = openSingleTop(route)

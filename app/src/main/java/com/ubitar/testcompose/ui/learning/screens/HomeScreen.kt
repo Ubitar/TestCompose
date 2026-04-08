@@ -13,6 +13,7 @@ fun HomeScreen(
     onOpenNavigation: () -> Unit,
     onOpenModifier: () -> Unit,
     onOpenState: () -> Unit,
+    onOpenViewModel: () -> Unit,
     onOpenVideo: () -> Unit
 ) {
     LearningScreen(
@@ -44,6 +45,12 @@ fun HomeScreen(
                     description = "认识 remember、mutableStateOf，以及为什么数据变化会自动刷新界面。",
                     color = Color(0xFF9C6644),
                     onClick = onOpenState
+                )
+                EntryCard(
+                    title = "Compose 和 ViewModel 交互",
+                    description = "学习如何把状态放进 ViewModel，再让 Compose 通过 collectAsState() 自动更新界面。",
+                    color = Color(0xFF3A7D44),
+                    onClick = onOpenViewModel
                 )
                 EntryCard(
                     title = "Compose 播放视频",
