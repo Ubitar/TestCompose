@@ -19,6 +19,8 @@ class AppNavigator(
 
     fun openStateIntro() = openSingleTop(LearningRoute.State.route)
 
+    fun openVideoIntro() = openSingleTop(LearningRoute.Video.route)
+
     fun openNavigationDemo(route: String) = openSingleTop(route)
 
     private fun openSingleTop(route: String) {

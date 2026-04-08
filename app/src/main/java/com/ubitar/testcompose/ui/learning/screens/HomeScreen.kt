@@ -12,7 +12,8 @@ fun HomeScreen(
     onOpenSafeDrawing: () -> Unit,
     onOpenNavigation: () -> Unit,
     onOpenModifier: () -> Unit,
-    onOpenState: () -> Unit
+    onOpenState: () -> Unit,
+    onOpenVideo: () -> Unit
 ) {
     LearningScreen(
         title = "Compose 学习入口",
@@ -44,8 +45,13 @@ fun HomeScreen(
                     color = Color(0xFF9C6644),
                     onClick = onOpenState
                 )
+                EntryCard(
+                    title = "Compose 播放视频",
+                    description = "学习为什么要配合 ExoPlayer 和 PlayerView，以及如何在 Compose 里正确释放播放器。",
+                    color = Color(0xFF5C3D8C),
+                    onClick = onOpenVideo
+                )
             }
         }
     }
 }
-

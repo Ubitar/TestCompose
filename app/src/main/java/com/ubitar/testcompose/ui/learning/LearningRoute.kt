@@ -9,4 +9,5 @@ sealed class LearningRoute(val route: String) {
     data object NavigationDemoC : LearningRoute("navigation_demo_c")
     data object Modifier : LearningRoute("modifier_intro")
     data object State : LearningRoute("state_intro")
+    data object Video : LearningRoute("video_intro")
 }

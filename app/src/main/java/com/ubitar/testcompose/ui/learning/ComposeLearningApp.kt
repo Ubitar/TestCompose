@@ -11,6 +11,7 @@ import com.ubitar.testcompose.ui.learning.screens.NavigationDemoScreen
 import com.ubitar.testcompose.ui.learning.screens.NavigationIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.SafeDrawingPaddingScreen
 import com.ubitar.testcompose.ui.learning.screens.StateIntroScreen
+import com.ubitar.testcompose.ui.learning.screens.VideoPlayerAdvancedScreen
 
 @Composable
 fun ComposeLearningApp() {
@@ -26,7 +27,8 @@ fun ComposeLearningApp() {
                 onOpenSafeDrawing = navigator::openSafeDrawing,
                 onOpenNavigation = navigator::openNavigationIntro,
                 onOpenModifier = navigator::openModifierIntro,
-                onOpenState = navigator::openStateIntro
+                onOpenState = navigator::openStateIntro,
+                onOpenVideo = navigator::openVideoIntro
             )
         }
         composable(LearningRoute.SafeDrawing.route) {
@@ -52,6 +54,9 @@ fun ComposeLearningApp() {
         }
         composable(LearningRoute.State.route) {
             StateIntroScreen(onBack = navigator::back)
+        }
+        composable(LearningRoute.Video.route) {
+            VideoPlayerAdvancedScreen(onBack = navigator::back)
         }
     }
 }
