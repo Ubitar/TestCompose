@@ -13,6 +13,7 @@ fun HomeScreen(
     onOpenSafeDrawing: () -> Unit,
     onOpenNavigation: () -> Unit,
     onOpenModifier: () -> Unit,
+    onOpenCenterDialog: () -> Unit,
     onOpenPager: () -> Unit,
     onOpenState: () -> Unit,
     onOpenViewModel: () -> Unit,
@@ -47,6 +48,12 @@ fun HomeScreen(
                     description = "理解布局、背景、点击、padding 为什么都长得像链式调用。",
                     color = Color(0xFF26547C),
                     onClick = onOpenModifier
+                )
+                EntryCard(
+                    title = "弹窗示例合集",
+                    description = "集中展示弹窗用法，后续会持续添加更多样式与交互。",
+                    color = Color(0xFF5C3D8C),
+                    onClick = onOpenCenterDialog
                 )
                 EntryCard(
                     title = "Compose 版 ViewPager",

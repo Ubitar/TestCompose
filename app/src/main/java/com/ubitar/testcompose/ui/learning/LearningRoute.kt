@@ -9,6 +9,7 @@ sealed class LearningRoute(val route: String) {
     data object NavigationDemoB : LearningRoute("navigation_demo_b")
     data object NavigationDemoC : LearningRoute("navigation_demo_c")
     data object Modifier : LearningRoute("modifier_intro")
+    data object CenterDialog : LearningRoute("center_dialog_intro")
     data object Pager : LearningRoute("pager_intro")
     data object State : LearningRoute("state_intro")
     data object ViewModel : LearningRoute("viewmodel_intro")

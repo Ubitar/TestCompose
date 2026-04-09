@@ -19,6 +19,8 @@ class AppNavigator(
 
     fun openModifierIntro() = openSingleTop(LearningRoute.Modifier.route)
 
+    fun openCenterDialogIntro() = openSingleTop(LearningRoute.CenterDialog.route)
+
     fun openPagerIntro() = openSingleTop(LearningRoute.Pager.route)
 
     fun openStateIntro() = openSingleTop(LearningRoute.State.route)

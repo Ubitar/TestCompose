@@ -8,6 +8,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.ubitar.testcompose.ui.learning.screens.ActivityLevelCounterViewModel
 import com.ubitar.testcompose.ui.learning.screens.ActivityScopedViewModelScreen
+import com.ubitar.testcompose.ui.learning.screens.DialogIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.HomeScreen
 import com.ubitar.testcompose.ui.learning.screens.ModifierIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.NavigationDemoScreen
@@ -38,6 +39,7 @@ fun ComposeLearningApp(
                 onOpenSafeDrawing = navigator::openSafeDrawing,
                 onOpenNavigation = navigator::openNavigationIntro,
                 onOpenModifier = navigator::openModifierIntro,
+                onOpenCenterDialog = navigator::openCenterDialogIntro,
                 onOpenPager = navigator::openPagerIntro,
                 onOpenState = navigator::openStateIntro,
                 onOpenViewModel = navigator::openViewModelIntro,
@@ -67,6 +69,9 @@ fun ComposeLearningApp(
         }
         composable(LearningRoute.Modifier.route) {
             ModifierIntroScreen(onBack = navigator::back)
+        }
+        composable(LearningRoute.CenterDialog.route) {
+            DialogIntroScreen(onBack = navigator::back)
         }
         composable(LearningRoute.Pager.route) {
             PagerIntroScreen(onBack = navigator::back)
