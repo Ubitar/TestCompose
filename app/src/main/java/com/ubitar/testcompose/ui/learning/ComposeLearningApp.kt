@@ -21,6 +21,8 @@ import com.ubitar.testcompose.ui.learning.screens.SharedNavGraphViewModelScreen
 import com.ubitar.testcompose.ui.learning.screens.StateIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.ViewModelIntroScreen
 import com.ubitar.testcompose.ui.learning.screens.VideoPlayerAdvancedScreen
+import com.ubitar.testcompose.ui.learning.screens.FloatingWindowIntroScreen
+import com.ubitar.testcompose.ui.learning.screens.FloatingWindowControlScreen
 
 @Composable
 fun ComposeLearningApp(
@@ -43,7 +45,8 @@ fun ComposeLearningApp(
                 onOpenPager = navigator::openPagerIntro,
                 onOpenState = navigator::openStateIntro,
                 onOpenViewModel = navigator::openViewModelIntro,
-                onOpenVideo = navigator::openVideoIntro
+                onOpenVideo = navigator::openVideoIntro,
+                onOpenFloatingWindow = navigator::openFloatingWindowIntro
             )
         }
         composable(LearningRoute.Snackbar.route) {
@@ -125,6 +128,15 @@ fun ComposeLearningApp(
         }
         composable(LearningRoute.Video.route) {
             VideoPlayerAdvancedScreen(onBack = navigator::back)
+        }
+        composable(LearningRoute.FloatingWindowIntro.route) {
+            FloatingWindowIntroScreen(
+                onBack = navigator::back,
+                onOpenControl = navigator::openFloatingWindowControl
+            )
+        }
+        composable(LearningRoute.FloatingWindowControl.route) {
+            FloatingWindowControlScreen(onBack = navigator::back)
         }
     }
 }

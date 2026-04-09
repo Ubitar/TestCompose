@@ -17,7 +17,8 @@ fun HomeScreen(
     onOpenPager: () -> Unit,
     onOpenState: () -> Unit,
     onOpenViewModel: () -> Unit,
-    onOpenVideo: () -> Unit
+    onOpenVideo: () -> Unit,
+    onOpenFloatingWindow: () -> Unit
 ) {
     LearningScreen(
         title = "Compose 学习入口",
@@ -78,6 +79,12 @@ fun HomeScreen(
                     description = "学习为什么要配合 ExoPlayer 和 PlayerView，以及如何在 Compose 里正确释放播放器。",
                     color = Color(0xFF5C3D8C),
                     onClick = onOpenVideo
+                )
+                EntryCard(
+                    title = "悬浮窗拖拽与靠边吸附",
+                    description = "学习拖拽手势、边界约束，以及松手后的吸附逻辑。",
+                    color = Color(0xFF2B6F63),
+                    onClick = onOpenFloatingWindow
                 )
             }
         }

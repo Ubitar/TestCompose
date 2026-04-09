@@ -19,4 +19,6 @@ sealed class LearningRoute(val route: String) {
     data object ViewModelSharedGraphB : LearningRoute("viewmodel_shared_graph_b")
     data object ViewModelActivityScoped : LearningRoute("viewmodel_activity_scoped")
     data object Video : LearningRoute("video_intro")
+    data object FloatingWindowIntro : LearningRoute("floating_window_intro")
+    data object FloatingWindowControl : LearningRoute("floating_window_control")
 }
