@@ -4,28 +4,38 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.lerp
+import kotlin.math.absoluteValue
 import kotlinx.coroutines.launch
 
 private data class PagerPage(
@@ -37,6 +47,8 @@ private data class PagerPage(
 private val demoPages = listOf(
     PagerPage("首页", "这一页通常放推荐内容或概览信息。", Color(0xFF2B6F63)),
     PagerPage("消息", "这一页可以展示最近通知、评论或聊天入口。", Color(0xFFD94F3D)),
+    PagerPage("发现", "这一页适合放专题、活动和灵感流内容。", Color(0xFF8C5E34)),
+    PagerPage("收藏", "这一页常见的是稍后阅读、喜欢和历史记录。", Color(0xFF6B4E9B)),
     PagerPage("我的", "这一页常见的是个人资料、收藏和设置。", Color(0xFF26547C))
 )
 
@@ -55,10 +67,11 @@ fun PagerIntroScreen(onBack: () -> Unit) {
             body = "ViewPager2 的 adapter，在 Compose 里通常变成 HorizontalPager 的 page lambda；currentItem 对应 pagerState.currentPage；跳页则常用 animateScrollToPage()。"
         )
         block {
-            CodeLikeLine("val pagerState = rememberPagerState(pageCount = { 3 })")
+            CodeLikeLine("val pagerState = rememberPagerState(pageCount = { 5 })")
             CodeLikeLine("HorizontalPager(state = pagerState) { page -> ... }")
             CodeLikeLine("scope.launch { pagerState.animateScrollToPage(index) }")
         }
+
         section(
             title = "基础横向翻页",
             body = "下面这块就是最基础的 pager。左右滑动时，currentPage 会跟着变化。"
@@ -71,6 +84,7 @@ fun PagerIntroScreen(onBack: () -> Unit) {
             )
             HorizontalPager(
                 state = pagerState,
+                overscrollEffect = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(220.dp)
@@ -78,6 +92,33 @@ fun PagerIntroScreen(onBack: () -> Unit) {
                 PagerCard(page = demoPages[page])
             }
         }
+
+        section(
+            title = "Pager 可以做视差效果吗",
+            body = "可以。除了整页铺满的视差，也可以做成 carousel：中间卡片最大，两侧卡片缩小并同时露出。做法是配合 contentPadding 和较小的 pageSize 让相邻页进入视口，再根据 pageOffset 动态调整缩放、透明度和前景位移。"
+        )
+        block {
+            CodeLikeLine("val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue")
+            CodeLikeLine("HorizontalPager(pageSize = PageSize.Fixed(220.dp), contentPadding = PaddingValues(horizontal = 48.dp))")
+            CodeLikeLine("Modifier.graphicsLayer { scaleX = lerp(0.84f, 1f, 1f - pageOffset) }")
+            HorizontalPager(
+                state = pagerState,
+                overscrollEffect = null,
+                pageSpacing = 16.dp,
+                contentPadding = PaddingValues(horizontal = 48.dp),
+                pageSize = PageSize.Fixed(220.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp)
+            ) { page ->
+                ParallaxPagerCard(
+                    page = demoPages[page],
+                    pageIndex = page,
+                    pagerState = pagerState
+                )
+            }
+        }
+
         section(
             title = "圆点指示器",
             body = "指示器本质上就是读取 pagerState.currentPage，然后自己画一排点。Compose 不需要额外的适配器回调。"
@@ -104,6 +145,7 @@ fun PagerIntroScreen(onBack: () -> Unit) {
                 }
             }
         }
+
         section(
             title = "TabRow 联动",
             body = "点击 Tab 时调用 animateScrollToPage()；滑动 pager 时，TabRow 直接读 currentPage 作为选中项，就实现了双向联动。"
@@ -117,7 +159,7 @@ fun PagerIntroScreen(onBack: () -> Unit) {
                             selectedTabIndex = pagerState.currentPage,
                             matchContentSize = false
                         ),
-                        width = Dp.Unspecified,
+                        width = Dp.Unspecified
                     )
                 }
             ) {
@@ -141,6 +183,55 @@ fun PagerIntroScreen(onBack: () -> Unit) {
                     }
                 },
                 color = Color(0xFF7A4E2D)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ParallaxPagerCard(
+    page: PagerPage,
+    pageIndex: Int,
+    pagerState: PagerState
+) {
+    val pageOffset =
+        ((pagerState.currentPage - pageIndex) + pagerState.currentPageOffsetFraction).absoluteValue
+    val clampedOffset = pageOffset.coerceIn(0f, 1f)
+    val density = LocalDensity.current
+    val foregroundShift = with(density) { (28.dp * clampedOffset).roundToPx() }
+    val scale = lerp(0.92f, 1f, 1f - clampedOffset)
+    val alpha = lerp(0.7f, 1f, 1f - clampedOffset)
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .graphicsLayer {
+                this.alpha = alpha
+                scaleX = scale
+                scaleY = scale
+            }
+            .clip(RoundedCornerShape(24.dp))
+            .background(page.color)
+    ) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .offset { IntOffset(x = foregroundShift, y = 0) }
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            TinyTag(text = "Parallax", color = Color(0x33000000))
+            Text(
+                text = page.title,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = page.description,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White
             )
         }
     }
